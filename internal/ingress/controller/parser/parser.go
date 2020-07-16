@@ -112,7 +112,7 @@ var supportedCreds = sets.NewString(
 	"oauth2",
 )
 
-var validProtocols = regexp.MustCompile(`\Ahttps$|\Ahttp$|\Agrpc$|\Agrpcs$`)
+var validProtocols = regexp.MustCompile(`\Ahttps$|\Ahttp$|\Agrpc$|\Agrpcs|\Afcgi$`)
 
 // New returns a new parser backed with store.
 func New(store store.Storer) Parser {
@@ -628,6 +628,16 @@ func overrideServiceByAnnotation(service *Service,
 		return
 	}
 	service.Protocol = kong.String(protocol)
+	path := annotations.ExtractPathName(anns)
+	if path == "" {
+		return
+	}
+	service.Path = kong.String(path)
+	port := annotations.ExtractPortName(anns)
+	if port == 0 {
+		return
+	}
+	service.Port = kong.Int(port)
 }
 
 // overrideService sets Service fields by KongIngress first, then by annotation

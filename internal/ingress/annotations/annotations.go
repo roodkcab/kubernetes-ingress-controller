@@ -18,6 +18,7 @@ package annotations
 
 import (
 	"strings"
+	"strconv"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
@@ -34,6 +35,10 @@ const (
 	protocolsAnnotationKey = "configuration.konghq.com/protocols"
 
 	clientCertAnnotationKey = "configuration.konghq.com/client-cert"
+
+	pathAnnotationKey = "configuration.konghq.com/path"
+
+	portAnnotationKey = "configuration.konghq.com/port"
 
 	// DefaultIngressClass defines the default class used
 	// by Kong's ingress controller.
@@ -114,6 +119,20 @@ func ExtractProtocolNames(anns map[string]string) []string {
 // client-certificate to use.
 func ExtractClientCertificate(anns map[string]string) string {
 	return anns[clientCertAnnotationKey]
+}
+
+// ExtractPathName extracts the path supplied in the annotation
+func ExtractPathName(anns map[string]string) string {
+	return anns[pathAnnotationKey]
+}
+
+// ExtractPortName extracts the port supplied in the annotation
+func ExtractPortName(anns map[string]string) int {
+	port, e := strconv.Atoi(anns[portAnnotationKey])
+	if e != nil {
+		return 0
+	}
+	return port
 }
 
 // HasServiceUpstreamAnnotation returns true if the annotation
