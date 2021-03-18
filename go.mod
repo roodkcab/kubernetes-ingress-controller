@@ -13,7 +13,7 @@ require (
 	github.com/google/go-containerregistry v0.0.0-20200131185320-aec8da010de2 // indirect
 	github.com/hashicorp/go-uuid v1.0.1
 	github.com/hbagdi/deck v0.7.1-0.20191223190449-3d9f90945d9d
-	github.com/hbagdi/go-kong v0.10.0
+	github.com/hbagdi/go-kong v0.12.0
 	github.com/mattbaird/jsonpatch v0.0.0-20171005235357-81af80346b1a // indirect
 	github.com/mattn/go-colorable v0.1.2 // indirect
 	github.com/mitchellh/mapstructure v1.1.2
