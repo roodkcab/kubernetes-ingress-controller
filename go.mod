@@ -8,14 +8,13 @@ require (
 	contrib.go.opencensus.io/exporter/stackdriver v0.12.9 // indirect
 	github.com/blang/semver v3.5.0+incompatible
 	github.com/eapache/channels v1.1.0
-	github.com/fatih/color v1.7.0
+	github.com/fatih/color v1.10.0
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
 	github.com/google/go-containerregistry v0.0.0-20200131185320-aec8da010de2 // indirect
 	github.com/hashicorp/go-uuid v1.0.1
 	github.com/hbagdi/deck v0.7.1-0.20191223190449-3d9f90945d9d
 	github.com/hbagdi/go-kong v0.10.0
 	github.com/mattbaird/jsonpatch v0.0.0-20171005235357-81af80346b1a // indirect
-	github.com/mattn/go-colorable v0.1.2 // indirect
 	github.com/mitchellh/mapstructure v1.1.2
 	github.com/openzipkin/zipkin-go v0.2.2 // indirect
 	github.com/pkg/errors v0.9.1
