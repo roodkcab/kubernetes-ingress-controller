@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"crypto/tls"
 	"crypto/x509"
+	"encoding/json"
 	"encoding/pem"
 	"fmt"
 	"reflect"
@@ -338,6 +339,7 @@ func getServiceEndpoints(log logrus.FieldLogger, s store.Storer, svc corev1.Serv
 		target := kongstate.Target{
 			Target: kong.Target{
 				Target: kong.String(endpoint.Address + ":" + endpoint.Port),
+				Weight: kong.Int(endpoint.Weight),
 			},
 		}
 		targets = append(targets, target)
@@ -423,14 +425,31 @@ func getEndpoints(
 				continue
 			}
 
+			weights := map[string]int{}
+			if trafficsplit, ok := s.Annotations["org.inagora.infra.trafficsplit"]; ok {
+				backends := map[string]int{}
+				json.Unmarshal([]byte(trafficsplit), &backends)
+				for backend, weight := range(backends) {
+					weights[backend] = weight
+				}
+			}
+
 			for _, epAddress := range ss.Addresses {
 				ep := fmt.Sprintf("%v:%v", epAddress.IP, targetPort)
 				if _, exists := adus[ep]; exists {
 					continue
 				}
+
+				weight := 100
+				log.Debugf("weight : %v", weights, epAddress.IP)
+				if podWeight, ok := weights[epAddress.IP]; ok {
+					weight = podWeight
+				}
+
 				ups := util.Endpoint{
 					Address: epAddress.IP,
 					Port:    fmt.Sprintf("%v", targetPort),
+					Weight:  weight,
 				}
 				upsServers = append(upsServers, ups)
 				adus[ep] = true

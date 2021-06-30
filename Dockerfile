@@ -2,7 +2,7 @@ FROM golang:1.16 AS build
 WORKDIR /kong-ingress-controller
 COPY go.mod ./
 COPY go.sum ./
-RUN go mod download
+RUN export https_proxy=http://10.0.100.9:8123 && export http_proxy=http://10.0.100.9:8123 && go mod download
 ADD . .
 ARG TAG
 ARG REPO_INFO
@@ -20,7 +20,7 @@ LABEL name="Kong Ingress Controller" \
       summary="Kong for Kubernetes Ingress" \
       description="Use Kong for Kubernetes Ingress. Configure plugins, health checking, load balancing and more in Kong for Kubernetes Services, all using Custom Resource Definitions (CRDs) and Kubernetes-native tooling."
 
-RUN apk --no-cache add ca-certificates
+RUN export http_proxy=http://10.0.100.9:8123 && https_proxy=http://10.0.100.9:8123 && apk --no-cache add ca-certificates
 
 # Create the user (ID 1000) and group that will be used in the
 # running container to run the process as an unprivileged user.

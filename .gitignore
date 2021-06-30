@@ -45,3 +45,5 @@ kubeconfig-test-cluster
 
 # ignore personal TODO lists
 TODO
+
+.idea

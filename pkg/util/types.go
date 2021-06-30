@@ -26,6 +26,7 @@ type Endpoint struct {
 	Address string `json:"address"`
 	// Port number of the TCP port
 	Port string `json:"port"`
+	Weight int `json:"weight"`
 }
 
 // RawSSLCert represnts TLS cert and key in bytes
